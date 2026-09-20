@@ -1,0 +1,956 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>이어하루 프로젝트 기획서</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@400;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --paper:#F7F8F5;
+  --surface:#FFFFFF;
+  --sunken:#EFF1EC;
+  --ink:#1B1E1C;
+  --ink-2:#4A504B;
+  --mist:#8E938E;
+  --line:#E2E4DE;
+  --line-strong:#CBCFC7;
+  --sprout:#3E7D5A;
+  --sprout-soft:#E4EFE7;
+  --clay:#B5652F;
+  --clay-soft:#F6E9DD;
+  --focus:#3E7D5A;
+  --shadow:0 1px 2px rgba(27,30,28,.05), 0 8px 24px -16px rgba(27,30,28,.28);
+  --f-display:"Hahmlet", "Nanum Myeongjo", Georgia, serif;
+  --f-body:"IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+  --f-mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --measure:46rem;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#131614;--surface:#1A1E1B;--sunken:#20241F;--ink:#EDEFEA;--ink-2:#B4BAB3;--mist:#797F79;
+    --line:#292E2A;--line-strong:#3A403A;--sprout:#6BA383;--sprout-soft:#1E2C24;--clay:#D08A52;--clay-soft:#2E2116;--focus:#6BA383;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#131614;--surface:#1A1E1B;--sunken:#20241F;--ink:#EDEFEA;--ink-2:#B4BAB3;--mist:#797F79;
+  --line:#292E2A;--line-strong:#3A403A;--sprout:#6BA383;--sprout-soft:#1E2C24;--clay:#D08A52;--clay-soft:#2E2116;--focus:#6BA383;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-weight:400;font-size:16px;line-height:1.75;-webkit-font-smoothing:antialiased}
+a{color:var(--sprout);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:2px}
+
+.shell{display:grid;grid-template-columns:1fr;max-width:1240px;margin:0 auto;padding:0 20px 96px}
+@media (min-width:1120px){.shell{grid-template-columns:230px minmax(0,1fr);gap:56px;padding:0 32px 120px}}
+.rail{display:none}
+@media (min-width:1120px){.rail{display:block;position:sticky;top:0;align-self:start;padding-top:64px;max-height:100vh;overflow-y:auto}}
+.rail ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.rail a{display:flex;gap:8px;text-decoration:none;color:var(--ink-2);font-size:12.5px;line-height:1.45;padding:5px 8px;border-radius:4px}
+.rail a:hover{background:var(--sunken);color:var(--ink)}
+.rail .n{font-family:var(--f-mono);font-size:11px;color:var(--mist);flex:none;padding-top:1px}
+.rail-title{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--mist);padding:0 8px 10px}
+.main{min-width:0;max-width:var(--measure)}
+
+.mast{padding:72px 0 40px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--mist);margin:0 0 20px}
+.wordmark{font-family:var(--f-display);font-weight:700;font-size:clamp(48px,10vw,72px);line-height:.98;letter-spacing:-.02em;margin:0;text-wrap:balance}
+.wordmark em{font-style:normal;color:var(--sprout)}
+.mast .lede{font-size:19px;line-height:1.6;color:var(--ink-2);margin:20px 0 0;max-width:34em}
+.mast .meta{display:flex;flex-wrap:wrap;gap:6px 28px;margin-top:32px;font-family:var(--f-mono);font-size:11.5px;color:var(--mist)}
+.mast .meta b{font-weight:500;color:var(--ink-2)}
+
+section{padding-top:64px;scroll-margin-top:24px}
+h2{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,4vw,33px);line-height:1.25;letter-spacing:-.015em;margin:0 0 6px;text-wrap:balance;display:flex;align-items:baseline;gap:14px}
+h2 .n{font-family:var(--f-mono);font-weight:500;font-size:13px;color:var(--sprout);flex:none;letter-spacing:0;transform:translateY(-2px)}
+.sub{color:var(--ink-2);font-size:15px;margin:0 0 26px}
+@media (min-width:640px){.sub{padding-left:41px}}
+h3{font-family:var(--f-body);font-weight:600;font-size:17.5px;line-height:1.5;margin:38px 0 10px;letter-spacing:-.005em;display:flex;align-items:baseline;gap:10px}
+h3 .k{font-family:var(--f-mono);font-weight:500;font-size:11px;color:var(--mist);letter-spacing:.06em;flex:none}
+h4{font-family:var(--f-body);font-weight:600;font-size:15px;margin:24px 0 8px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 16px;padding-left:1.15em}
+li{margin:0 0 6px}
+li::marker{color:var(--mist)}
+strong{font-weight:600}
+code{font-family:var(--f-mono);font-size:.86em;background:var(--sunken);padding:1px 5px;border-radius:3px;color:var(--ink)}
+
+.thesis{background:var(--sprout-soft);border-left:3px solid var(--sprout);padding:24px 28px;margin:26px 0;border-radius:0 6px 6px 0}
+.thesis p{margin:0;font-family:var(--f-display);font-weight:600;font-size:20px;line-height:1.5;letter-spacing:-.01em}
+.thesis .cap{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--sprout);margin:0 0 12px;display:block}
+.thesis.clay{background:var(--clay-soft);border-left-color:var(--clay)}
+.thesis.clay .cap{color:var(--clay)}
+
+.note{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:18px 20px;margin:22px 0;font-size:14.5px;color:var(--ink-2)}
+.note b{color:var(--ink)}
+.note.warn{border-left:3px solid var(--clay);background:var(--clay-soft)}
+
+.tw{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.6}
+thead th{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);font-weight:500;background:var(--sunken);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+td.num,th.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td.k{font-weight:600;color:var(--ink);white-space:nowrap}
+.free{color:var(--sprout);font-weight:600}
+.paid{color:var(--clay);font-weight:600}
+.dim{color:var(--mist);font-weight:400;font-size:12.5px}
+
+.kv{display:grid;margin:18px 0;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.kv>div{display:flex;flex-wrap:wrap;gap:4px 18px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:14.5px}
+.kv>div:last-child{border-bottom:0}
+.kv dt{flex:0 0 118px;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mist);padding-top:4px}
+.kv dd{margin:0;flex:1;min-width:200px}
+.kv dd small{display:block;color:var(--ink-2);font-size:13.5px;line-height:1.65;margin-top:2px}
+
+.pill{display:inline-block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:3px;border:1px solid var(--line-strong);color:var(--ink-2);white-space:nowrap}
+.pill.p0{background:var(--sprout);border-color:var(--sprout);color:#fff}
+.pill.p2{color:var(--mist)}
+
+.steps{list-style:none;padding:0;margin:22px 0;counter-reset:s}
+.steps>li{counter-increment:s;position:relative;padding:0 0 22px 46px;margin:0;border-left:1px solid var(--line)}
+.steps>li:last-child{border-left-color:transparent;padding-bottom:0}
+.steps>li::before{content:counter(s,decimal-leading-zero);position:absolute;left:-15px;top:0;width:30px;height:30px;border-radius:50%;background:var(--surface);border:1px solid var(--line-strong);color:var(--ink-2);font-family:var(--f-mono);font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center}
+.steps>li.key::before{background:var(--sprout);border-color:var(--sprout);color:#fff}
+.steps h4{margin:2px 0 4px;font-size:16px}
+.steps p{font-size:14.5px;color:var(--ink-2);margin:0 0 6px}
+.steps .why{font-size:13px;color:var(--mist)}
+.steps .why b{color:var(--ink-2);font-weight:500}
+
+.flow{list-style:none;padding:0;margin:20px 0;display:grid;gap:8px}
+.flow>li{display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;padding:12px 14px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-size:14.5px}
+.flow .st{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;color:var(--sprout);font-weight:600;padding-top:4px}
+.flow b{display:block;font-weight:600;margin-bottom:2px}
+.flow span{color:var(--ink-2);font-size:13.5px}
+.flow>li.br{background:var(--clay-soft);border-color:var(--clay)}
+.flow>li.br .st{color:var(--clay)}
+
+.ia{margin:20px 0;border:1px solid var(--line);border-radius:6px;background:var(--surface);padding:16px 20px;font-family:var(--f-mono);font-size:13px;line-height:1.85;overflow-x:auto;white-space:pre;color:var(--ink-2)}
+.ia b{color:var(--ink);font-weight:600}
+.ia i{font-style:normal;color:var(--sprout)}
+
+.two{display:grid;gap:12px;margin:20px 0}
+@media (min-width:600px){.two{grid-template-columns:1fr 1fr}}
+.two>div{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:var(--surface)}
+.two h4{margin:0 0 10px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase}
+.two div.x h4{color:var(--clay)}
+.two div.o h4{color:var(--sprout)}
+.two div.lock{background:var(--sprout-soft);border-color:var(--sprout)}
+.two div.lock h4{color:var(--sprout)}
+.two ul{margin:0;padding-left:1.05em;font-size:14px}
+.two li{margin:0 0 5px;color:var(--ink-2)}
+
+.sw{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin:18px 0}
+.sw>div{border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface)}
+.chip{height:48px}
+.sw .t{padding:9px 12px}
+.sw .t b{display:block;font-size:13.5px;font-weight:600}
+.sw .t code{background:none;padding:0;font-size:11px;color:var(--mist)}
+.sw .t span{display:block;font-size:12px;color:var(--ink-2);margin-top:2px;line-height:1.45}
+
+.screen{border:1px solid var(--line-strong);border-radius:10px;background:var(--surface);padding:16px;max-width:330px;margin:22px 0;box-shadow:var(--shadow);font-size:13px}
+.screen .hd{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mist);margin-bottom:10px}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:14px}
+.cal span{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:4px;font-family:var(--f-mono);font-size:11px;color:var(--ink-2);background:var(--sunken)}
+.cal span.on{background:var(--sprout);color:#fff;font-weight:600}
+.cal span.b{background:var(--clay-soft);color:var(--clay)}
+.cal span.g{background:var(--sunken);color:var(--mist)}
+.row{display:flex;align-items:center;gap:9px;padding:9px 10px;border:1px solid var(--line);border-radius:6px;margin-bottom:6px;background:var(--paper)}
+.row .grip{font-family:var(--f-mono);color:var(--line-strong);flex:none;letter-spacing:-1px}
+.row .lbl{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.08em;padding:2px 5px;border-radius:3px;flex:none}
+.row .lbl.r{background:var(--sprout-soft);color:var(--sprout)}
+.row .lbl.t{background:var(--sunken);color:var(--mist)}
+.row .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row .st{font-size:11px;color:var(--mist);flex:none}
+.row .st.done{color:var(--sprout)}
+.row .st.pb{color:var(--clay)}
+
+.foot{margin-top:72px;padding-top:22px;border-top:1px solid var(--line);font-size:12.5px;color:var(--mist);line-height:1.7}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="shell">
+
+<nav class="rail" aria-label="목차">
+  <p class="rail-title">목차</p>
+  <ol>
+    <li><a href="#s1"><span class="n">1</span>프로젝트 개요</a></li>
+    <li><a href="#s2"><span class="n">2</span>타겟</a></li>
+    <li><a href="#s3"><span class="n">3</span>시장 분석</a></li>
+    <li><a href="#s4"><span class="n">4</span>서비스 전략</a></li>
+    <li><a href="#s5"><span class="n">5</span>기능 기획</a></li>
+    <li><a href="#s6"><span class="n">6</span>UX 설계</a></li>
+    <li><a href="#s7"><span class="n">7</span>시스템 요구사항</a></li>
+    <li><a href="#s8"><span class="n">8</span>사업 및 운영</a></li>
+    <li><a href="#s9"><span class="n">9</span>성공 기준</a></li>
+    <li><a href="#s10"><span class="n">10</span>개발 계획</a></li>
+  </ol>
+</nav>
+
+<main class="main">
+
+<header class="mast">
+  <p class="eyebrow">Project Plan · v2.0</p>
+  <h1 class="wordmark">처음부터가 아니라,<br><em>이어하루.</em></h1>
+  <p class="lede">계획을 완벽하게 지키게 만드는 앱은 이미 많습니다. 우리는 <b>계획이 무너진 다음에 다시 세우는 앱</b>을 만듭니다.</p>
+  <div class="meta">
+    <span><b>프로젝트명</b> 이어하루 (가칭)</span>
+    <span><b>작성일</b> 2026. 9. 7</span>
+    <span><b>대상</b> 개발 · PM · 디자인 · 마케팅</span>
+    <span><b>1차 플랫폼</b> iOS</span>
+  </div>
+  <div class="note" style="margin-top:28px">
+    <b>v2.0에서 달라진 것</b> — v1.1의 내용을 표준 기획서 구조(개요 → 타겟 → 시장 → 전략 → 기능 → UX → 시스템 → 사업 → 성공 기준 → 개발 계획) 10개 항목으로 재편성했습니다. 근거 수치·가격안·KPI·제작 순서는 v1.1과 동일하며, 브랜드 가이드는 §6 UX/UI 원칙으로, 팀별 역할과 첫 2주는 §10 일정으로 통합했습니다.
+  </div>
+</header>
+
+<!-- 1 -->
+<section id="s1">
+  <h2><span class="n">1</span>프로젝트 개요</h2>
+  <p class="sub">한 문장으로 합의하고 시작합니다. 이 문장에 어긋나는 기능은 만들지 않습니다.</p>
+
+  <h3><span class="k">1.1</span>프로젝트명</h3>
+  <div class="kv">
+    <div><dt>서비스명</dt><dd><strong>이어하루</strong> (가칭 · 추천 1순위)<small>"하루"로 일상 관리 앱임이 바로 읽히고, "이어"가 제품의 핵심 주장 그 자체입니다. 1일차로 리셋하지 않고 어제에 이어서 갑니다.</small></dd></div>
+    <div><dt>스토어 등록명</dt><dd>이어하루 – 루틴·할 일 플래너<small>한국 앱은 이름 + 부제로 직관성을 완성합니다.</small></dd></div>
+    <div><dt>태그라인</dt><dd>처음부터가 아니라, 이어하루.</dd></div>
+    <div><dt>예비 후보</dt><dd>2순위 <strong>또하루</strong> ("못한 날이 있어도, 또 하루") · 3순위 <strong>하루씩</strong> ("무리하지 않고, 하루씩")<small>또하루는 "또"가 체념으로 읽힐 위험, 하루씩은 복귀 메시지가 약해 힐링 앱으로 오인될 위험이 있습니다. 사용자 인터뷰 10명에게 첫인상을 확인한 뒤 확정합니다.</small></dd></div>
+  </div>
+  <div class="note warn"><b>확정 전 확인 (마케팅 담당)</b> — ① 상표 검색(키프리스) ② App Store·Play 동명 앱 검색 ③ 도메인·SNS 계정 확보 ④ 인터뷰에서 후보 3개 첫인상 확인</div>
+
+  <h3><span class="k">1.2</span>한 줄 소개</h3>
+  <div class="thesis">
+    <span class="cap">제품 정의</span>
+    <p>계획이 무너지는 순간에 개입하는 플래너.<br>완벽하게 지키는 앱이 아니라, 무너진 다음에 다시 세우는 앱.</p>
+  </div>
+
+  <h3><span class="k">1.3</span>기획 의도</h3>
+  <p>시장에 앱이 없어서 만드는 게 아닙니다. 있는 앱들이 전부 같은 방향으로 틀렸기 때문입니다. 국내 투두·루틴 앱은 기능이 상향 평준화됐지만, 하나같이 <strong>"더 하게 만드는" 쪽으로 설계</strong>되어 있습니다. 연속 기록을 세우고, 하루 빠지면 0으로 리셋하고, 달성률로 사람을 평가합니다.</p>
+  <p>우리는 정반대 자리에 섭니다. <strong>더 하게 만드는 앱이 아니라, 덜 무너지게 만드는 앱.</strong> 사람들은 계획을 못 세워서가 아니라, 한 번 어긴 뒤에 그만둡니다. 그 순간에 개입하는 제품이 국내에 없습니다.</p>
+
+  <h3><span class="k">1.4</span>문제 정의</h3>
+  <p><strong>설치된 앱의 46.1%가 30일 안에 삭제</strong>되고, 30일 리텐션은 iOS 5.3% · Android 3.8%입니다. 왜 지울까요. 대부분의 앱이 스트릭을 0으로 리셋하기 때문입니다. 3일 지키다 하루 빠뜨리면 앱이 "당신은 실패했다"고 말하고, 사람은 앱을 지웁니다. 계획을 포기한 게 아니라, <strong>자기 실패를 매일 확인시키는 화면을 없앤 것</strong>입니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>연구</th><th>규모</th><th>결과</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Milkman et al. (2021)<br><span class="dim">Nature</span></td><td class="num">61,293명<br>54개 개입</td><td>행동을 바꾸는 방법 54가지를 동시에 비교한 결과 <strong>1위가 "빠뜨린 뒤 복귀할 때 주는 보상"</strong></td></tr>
+      <tr><td class="k">Lally et al. (2010)<br><span class="dim">Eur. J. Social Psych.</span></td><td class="num">96명<br>84일 추적</td><td><em>"한 번의 수행 기회를 놓치는 것은 습관 형성 과정에 실질적 영향을 주지 않았다."</em></td></tr>
+      <tr><td class="k">ten Broeke &amp; Adriaanse (2023)</td><td class="num">종단 3편</td><td>실패가 다음 실패를 부르는 경로는 <strong>자기효능감 저하</strong>를 거칩니다. 결손 자체가 아니라 <strong>해석</strong>이 문제입니다.</td></tr>
+      <tr><td class="k">Sniehotta et al. (2006)<br><span class="dim">Br. J. Health Psych.</span></td><td class="num">211명</td><td>"언제 할지"만 계획한 집단은 무계획 집단과 차이가 없었고(주 113분 vs 95분), <strong>"방해받으면 뭘 할지"까지 계획했을 때 179분 · 준수율 71%</strong>로 도약</td></tr>
+    </tbody>
+  </table></div>
+  <div class="thesis">
+    <span class="cap">우리가 서는 자리</span>
+    <p>결손 자체는 습관을 망치지 않는다. 결손을 어떻게 해석하게 하느냐가 망친다. 그리고 가장 효과적인 개입은 "복귀하는 순간"에 있다.</p>
+  </div>
+
+  <h3><span class="k">1.5</span>프로젝트 목표</h3>
+  <div class="kv">
+    <div><dt>제품 목표</dt><dd>결손 후 <strong>다음 기회에 복귀하는 비율(주간 복귀율) 50%</strong>를 만드는 플래너<small>시장에 없는 지표를 대표 지표로 삼아, 제품 가치와 브랜드 자산을 동시에 만듭니다.</small></dd></div>
+    <div><dt>사용자 목표</dt><dd>하루 관리 시간 <strong>30초 이하</strong>, 앱을 지우는 순간이 없는 경험</dd></div>
+    <div><dt>사업 목표</dt><dd>Phase 2 App Store 출시 · <strong>30일 리텐션 12%(벤치마크 2배)</strong> · 광고 제거 구매율 활성 사용자 5%</dd></div>
+    <div><dt>조직 목표</dt><dd>Phase 2까지 <strong>서버 없이</strong> 원가 0으로 핵심 기능을 영구 무료 제공하는 구조 확립</dd></div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section id="s2">
+  <h2><span class="n">2</span>타겟</h2>
+  <p class="sub">이미 열심히 하고 있고, 이미 무너지고 있는 사람. 계획을 못 세우는 사람이 아니라 한 번 어긴 뒤 그만두는 사람입니다.</p>
+
+  <h3><span class="k">2.1</span>핵심 타겟</h3>
+  <div class="kv">
+    <div><dt>1차 타겟</dt><dd><strong>루틴·투두 앱을 써봤다가 그만둔 20~30대</strong><small>인터뷰·베타 모집 기준이 곧 이 정의입니다. "앱을 지운 경험"이 있는 사람이 우리 주장을 가장 빨리 이해합니다.</small></dd></div>
+    <div><dt>세그먼트 A</dt><dd><strong>대학생 — 갓생 실천 63.1%, 번아웃 경험 53.6%</strong>가 동시에 성립<small>이미 열심히 하고 있고, 이미 무너지고 있습니다. 수요가 가장 명확한 집단입니다.</small></dd></div>
+    <div><dt>세그먼트 B</dt><dd><strong>직장인 — 자기계발을 못 하는 1순위 이유가 "시간 부족(40.5%)"</strong><small>앱 관리에 시간을 쓰게 하면 안 되는 이유이자, "알림에서 바로 끝내기"의 근거입니다.</small></dd></div>
+    <div><dt>확장 후보</dt><dd>운동 초심자 · 시험 준비생 · 복직/복학한 사람 · 육아 중인 부모 · 금연·금주 시도자<small>전체 지표가 애매하게 저조하면 이 중 하나로 좁힙니다(§10.4 B6).</small></dd></div>
+  </div>
+
+  <h3><span class="k">2.2</span>사용자 니즈</h3>
+  <div class="tw"><table>
+    <thead><tr><th>니즈</th><th>근거 · 커뮤니티 원문</th><th>대응 기능</th></tr></thead>
+    <tbody>
+      <tr><td class="k">놓쳐도 다시 시작하고 싶다</td><td>스트릭 리셋이 삭제의 직접 원인. 리셋 없이 "이어서" 가고 싶은 욕구</td><td>리커버리 · 복귀율 (§5)</td></tr>
+      <tr><td class="k">못 하는 날에도 뭔가는 하고 싶다</td><td>0 아니면 1인 구조가 부담. 대처 계획이 있을 때 준수율 44.1%→71.0%</td><td>플랜B (§5)</td></tr>
+      <tr><td class="k">앱을 관리하는 데 시간을 쓰기 싫다</td><td>직장인 시간 부족 40.5%. "기존 앱들은 알림보다 기록을 강조한다"</td><td>알림 액션 · 홈 위젯 (§5)</td></tr>
+      <tr><td class="k">놓쳤을 때 다시 알려줬으면</td><td><em>"습관을 놓쳤을 때 자동 재알림"</em> — 커뮤니티 요구 그대로</td><td>리커버리 개입 시점 (§5)</td></tr>
+      <tr><td class="k">직장에서 조용히 쓰고 싶다</td><td><em>"직장에서 쓸 수 있는 무음 알림"</em>, <em>"근무시간을 피한 유연한 스케줄"</em></td><td>무음 알림 모드 (§7)</td></tr>
+      <tr><td class="k">평가받고 싶지 않다</td><td>투두메이트 리뷰의 반복 불만 — SNS화. 비교·랭킹은 자기효능감을 떨어뜨림</td><td>소셜·랭킹 미도입 (§4)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><span class="k">2.3</span>사용 시나리오</h3>
+  <ol class="flow">
+    <li><span class="st">S1</span><div><b>등록 — 일요일 밤, 다음 주 루틴을 만든다</b><span>"헬스장 45분, 월·수·금 아침 7시"를 등록합니다. 선택 입력란 하나가 더 보입니다. <em>"이걸 못 하는 날엔?"</em> → 라이브러리에서 "집에서 스쿼트 10분"을 고릅니다. 첫 루틴 등록이 "1/5 완료"로 표시됩니다.</span></div></li>
+    <li><span class="st">S2</span><div><b>평일 — 알림 위에서 하루가 끝난다</b><span>아침 7시 알림을 길게 눌러 <code>했어요</code>를 탭합니다. 앱은 열지 않았습니다. 하루 조작 시간 5초.</span></div></li>
+    <li class="br"><span class="st">S3</span><div><b>수요일 — 야근 때문에 못 갔다</b><span>알림에서 <code>플랜B로</code>를 고릅니다. 스쿼트 10분이 오늘의 수행으로 기록됩니다. 캘린더에는 Clay 색 점이 찍히고, "실패한 날"로 표시되지 않습니다.</span></div></li>
+    <li class="br"><span class="st">S4</span><div><b>금요일 — 아무것도 못 했다</b><span>그날 밤에는 아무 팝업도 뜨지 않습니다. 다음 기회인 월요일 아침 알림이 이렇게 옵니다. <em>"금요일은 쉬었네요. 오늘 이어서 해볼까요?"</em></span></div></li>
+    <li><span class="st">S5</span><div><b>월요일 — 돌아왔다</b><span><code>했어요</code>를 누르면 "돌아오셨네요"라는 한 줄이 옵니다. 연속 일수는 0이 되지 않았습니다. 통계에는 <code>이번 달 18/22일 · 최장 공백 2일</code>로 보입니다.</span></div></li>
+    <li><span class="st">S6</span><div><b>3주 뒤 — 자기 패턴을 알게 된다</b><span>주간 리포트에서 "수요일마다 플랜B 비율 70%"를 봅니다. 원래 목표가 너무 컸다는 걸 알고 루틴을 조정합니다. 달성률로는 절대 안 보이는 정보입니다.</span></div></li>
+  </ol>
+
+  <h3><span class="k">2.4</span>타겟 플랫폼</h3>
+  <div class="kv">
+    <div><dt>1차</dt><dd><strong>iOS (iPhone)</strong> — Phase 0~2<small>알림 액션·홈 위젯이 제품의 심장이므로 플랫폼별 네이티브 구현이 필요합니다. 두 플랫폼을 동시에 완성도 있게 만들기 어려워 하나로 시작합니다.</small></dd></div>
+    <div><dt>2차</dt><dd>Android — Phase 3</dd></div>
+    <div><dt>제외</dt><dd>웹 · PC 버전 · iPad 최적화 — 개인용 모바일 제품이며, 1차 범위에 넣지 않습니다.</dd></div>
+  </div>
+
+  <h3><span class="k">2.5</span>타겟 언어 / 지역</h3>
+  <div class="kv">
+    <div><dt>언어</dt><dd><strong>한국어 단일</strong><small>알림 문구가 곧 디자인인 제품이라 번역이 아니라 재작성이 필요합니다. 다국어는 Phase 3 이후 별도 판단.</small></dd></div>
+    <div><dt>지역</dt><dd><strong>대한민국 App Store</strong><small>가격 기준선(투두메이트 연 7,500원), 커뮤니티(클리앙·인스티즈), 검색 키워드("작심삼일") 모두 국내 기준으로 설계했습니다.</small></dd></div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section id="s3">
+  <h2><span class="n">3</span>시장 분석</h2>
+  <p class="sub">앱은 충분히 많습니다. 비어 있는 건 방향입니다.</p>
+
+  <h3><span class="k">3.1</span>시장 현황</h3>
+  <div class="tw"><table>
+    <thead><tr><th>항목</th><th class="num">수치</th><th>의미</th></tr></thead>
+    <tbody>
+      <tr><td class="k">30일 내 삭제율</td><td class="num">46.1%</td><td>설치한 앱의 절반 가까이가 한 달 안에 사라집니다</td></tr>
+      <tr><td class="k">30일 리텐션</td><td class="num">iOS 5.3% · Android 3.8%</td><td>"계속 쓰는 앱"이 되는 것 자체가 시장의 병목입니다</td></tr>
+      <tr><td class="k">설치 다음날 재방문</td><td class="num">iOS 25.4%</td><td>첫 사용 안내 품질의 벤치마크</td></tr>
+      <tr><td class="k">대학생 갓생 실천 / 번아웃</td><td class="num">63.1% / 53.6%</td><td>수요와 붕괴가 동시에 존재</td></tr>
+      <tr><td class="k">직장인 자기계발 장애 1순위</td><td class="num">시간 부족 40.5%</td><td>앱 관리 시간을 요구하면 모순</td></tr>
+      <tr><td class="k">국내 구독 이용</td><td class="num">3~4개 39.8% · 월 3만원 미만 30.5%</td><td>신규 예산이 아니라 <strong>교체 경쟁</strong></td></tr>
+      <tr><td class="k">구독 앱 매출 중간값</td><td class="num">월 $492 · 59.3%가 누적 $1,000 미만</td><td>기대치는 냉정하게 (Adapty 2026, 16,000개 앱)</td></tr>
+      <tr><td class="k">생활 도구 첫 구독 갱신율</td><td class="num">58.1% (전 분야 1위)</td><td>"빨리 많이"가 아니라 <strong>"오래 남는"</strong> 분야</td></tr>
+    </tbody>
+  </table></div>
+  <p>국내 시장에는 투두메이트·마이루틴·루티너리·하루콩·열품타가 이미 자리 잡았고 기능은 상향 평준화됐습니다. 하지만 <strong>"이걸 못 하면 대신 이걸" 형태의 대체 실행 기능은 국내 확인 0건</strong>, 알림 안에서 행동을 고르게 하는 앱도 <strong>확인 0건</strong>입니다. 정반대로 간 시장 1위 챌린저스는 실패 시 돈을 차감하는 구조였고, 2023년 습관 사업을 접고 뷰티 커머스로 전환했습니다.</p>
+
+  <h3><span class="k">3.2</span>사용자 문제</h3>
+  <div class="tw"><table>
+    <thead><tr><th>표면 증상</th><th>실제 원인</th><th>기존 앱의 대응</th></tr></thead>
+    <tbody>
+      <tr><td class="k">앱을 지운다</td><td>계획 포기가 아니라, 실패를 매일 확인시키는 화면이 괴로움</td><td>스트릭 리셋으로 오히려 강화</td></tr>
+      <tr><td class="k">한 번 빠지면 안 돌아온다</td><td>자기효능감 저하. 결손의 <strong>해석</strong>이 문제</td><td>"3일 연속 실패" 같은 문구로 악화</td></tr>
+      <tr><td class="k">계획은 세우는데 안 지켜진다</td><td>"언제 할지"만 계획하고 "방해받으면 뭘 할지"가 없음</td><td>실행의도까지만 지원, 대처계획은 없음</td></tr>
+      <tr><td class="k">앱 관리가 또 하나의 일이 된다</td><td>기록 중심 설계. 앱을 열어야 체크가 됨</td><td>예쁜 통계에 집중, 알림은 보조</td></tr>
+      <tr><td class="k">요일 고정 루틴이 자주 깨진다</td><td>화요일 야근이면 화요일 루틴은 무조건 실패</td><td>대부분 요일 고정만 지원</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><span class="k">3.3</span>경쟁 서비스 분석</h3>
+  <div class="tw"><table>
+    <thead><tr><th>서비스</th><th>축 (강점)</th><th>우리와의 관계</th></tr></thead>
+    <tbody>
+      <tr><td class="k">투두메이트</td><td>소셜 · 친구 · 팔로우. 연 7,500원으로 국내 가격 기준선</td><td>리뷰의 반복 불만이 "SNS화". 우리는 소셜을 하지 않음</td></tr>
+      <tr><td class="k">마이루틴</td><td>루틴 관리의 기본형. 스트릭 · 달성률 중심</td><td>원칙 1을 어기는 순간 이 앱의 열등한 복제품이 됨</td></tr>
+      <tr><td class="k">루티너리</td><td>시간 순서대로 루틴을 진행하는 타이머형</td><td>실행 보조는 유사하나 결손 이후 개입 없음</td></tr>
+      <tr><td class="k">하루콩</td><td>기분 일기 · 메모</td><td>다른 축. 기록 기능은 하지 않음</td></tr>
+      <tr><td class="k">열품타</td><td>공부 시간 랭킹 · 리더보드</td><td>비교는 자기효능감을 떨어뜨림. 랭킹 미도입</td></tr>
+      <tr><td class="k">챌린저스</td><td>금전 예치 · 벌칙 (StepBet 실증 +31.2%)</td><td>내재 동기를 떨어뜨리고, 수익을 못 내 2023년 커머스로 피벗. 정반대 방향의 실패 사례</td></tr>
+      <tr><td class="k">Finch · Habitica</td><td>캐릭터 육성 · 게임화 (Finch 리뷰 74.9만)</td><td>이미 점유된 축. 캐릭터 · 마스코트 없음</td></tr>
+      <tr><td class="k">Structured</td><td>시간축 블록 배치, 놓친 항목 Replan (무료)</td><td>"루틴 기능" 요청 3,600표 이상을 3년 넘게 방치. 루틴+투두 교집합이 비어 있음</td></tr>
+      <tr><td class="k">Motion · Reclaim</td><td>AI 자동 일정 배치</td><td>사용자당 AI 한도·초과 요금을 가격표에 노출 — 저가 앱이 감당 못 하는 원가. 미도입</td></tr>
+      <tr><td class="k">TickTick · Reclaim · Habitica</td><td>루틴과 투두를 구조적으로 분리한 해외 3개 앱</td><td>분리 구조는 참고, 국내에서는 우리가 유일</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note warn"><b>검증 필요</b> — 위 "국내 확인 0건"은 공식 앱 설명·홈페이지·언론 보도 기준입니다. Phase 0에서 PM이 투두메이트·마이루틴·루티너리·하루콩·오늘의루틴·TimeBlocks 6종을 실기기에 설치해 ① 플랜B 유무 ② 알림 버튼 ③ 미완료 재알림 ④ 스트릭 리셋 정책을 직접 확인합니다. 경쟁앱에 이미 플랜B가 있다면 기획 전제를 다시 짭니다.</div>
+</section>
+
+<!-- 4 -->
+<section id="s4">
+  <h2><span class="n">4</span>서비스 전략</h2>
+  <p class="sub">무엇을 만들지보다 무엇을 안 만들지가 일정을 지킵니다.</p>
+
+  <h3><span class="k">4.1</span>핵심 가치</h3>
+  <div class="kv">
+    <div><dt>원칙 1</dt><dd><strong>계획은 바뀔 수 있다. 그건 실패가 아니다.</strong><small>모든 화면, 모든 문구, 모든 통계가 이 명제를 따릅니다.</small></dd></div>
+    <div><dt>원칙 2</dt><dd><strong>앱을 관리하는 데 시간을 쓰게 하지 않는다.</strong><small>시간이 없어서 못 하는 사람에게 앱 관리 시간을 요구하면 모순입니다. 하루 조작 30초가 목표입니다.</small></dd></div>
+    <div><dt>원칙 3</dt><dd><strong>기록이 아니라 실행을 돕는다.</strong><small>예쁜 통계를 만드는 회사가 아니라, 오늘 그 일을 하게 만드는 회사입니다.</small></dd></div>
+  </div>
+  <h4>고객에게 주는 변화</h4>
+  <div class="tw"><table>
+    <thead><tr><th>영역</th><th>변화</th></tr></thead>
+    <tbody>
+      <tr><td class="k">정서</td><td><strong>앱을 지우는 순간이 사라집니다.</strong> 자기 실패를 매일 확인시키는 화면이 없습니다.</td></tr>
+      <tr><td class="k">행동</td><td><strong>재시작 비용이 0에 가까워집니다.</strong> "오늘부터 다시 1일차"가 아니라 "어제 하던 데서 이어서".</td></tr>
+      <tr><td class="k">실행</td><td><strong>못 하는 날에도 뭔가는 합니다.</strong> 0과 1 사이에 선택지가 생깁니다.</td></tr>
+      <tr><td class="k">시간</td><td><strong>하루 관리 시간 30초 이하.</strong> 알림에서 처리하면 앱 실행 0회로 하루가 끝납니다.</td></tr>
+      <tr><td class="k">인식</td><td><strong>자기 패턴을 알게 됩니다.</strong> "수요일에 잘 무너지는구나", "이 루틴은 목표가 너무 컸구나".</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><span class="k">4.2</span>기획 차별화 포인트</h3>
+  <div class="tw"><table>
+    <thead><tr><th>차별점</th><th>내용</th><th>경쟁 현황</th></tr></thead>
+    <tbody>
+      <tr><td class="k">플랜B</td><td>루틴마다 대체 실행을 두고, 플랜B 실행도 "수행"으로 집계</td><td>국내 확인 0건</td></tr>
+      <tr><td class="k">알림 안에서 선택</td><td>알림 액션으로 했어요 · 플랜B로 · 쉼 · 30분 뒤를 앱 실행 없이 처리</td><td>국내 확인 0건</td></tr>
+      <tr><td class="k">스트릭을 쓰지 않음</td><td>연속 일수 리셋 없음. 비율(이번 달 18/22일)과 최장 공백으로 표시</td><td>경쟁 앱 전부가 스트릭 사용 — 안 하는 것 자체가 차별점</td></tr>
+      <tr><td class="k">복귀율 지표</td><td>결손 후 다음 기회에 수행한 비율을 대표 지표로 정의</td><td>시장에 없는 지표 → 브랜드 자산</td></tr>
+      <tr><td class="k">루틴 · 투두 구조 분리</td><td>단발성 투두는 이월, 반복 루틴은 복귀 관리. 한 목록에 섞어 표시</td><td>국내 없음. 해외 TickTick · Reclaim · Habitica</td></tr>
+      <tr><td class="k">원가 기반 과금</td><td>핵심 기능 영구 무료. 실제 원가가 드는 것만 유료</td><td>가치 기반 과금이 대부분</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><span class="k">4.3</span>서비스 포지셔닝</h3>
+  <div class="thesis">
+    <span class="cap">포지셔닝 문장</span>
+    <p>더 하게 만드는 앱이 아니라, 덜 무너지게 만드는 앱.<br>코치가 아니라 동료. 몰아붙이지 않고, 그렇다고 봐주지도 않는다.</p>
+  </div>
+  <h4>하지 않는 것 — 포지셔닝의 경계</h4>
+  <div class="tw"><table>
+    <thead><tr><th>안 하는 것</th><th>왜</th></tr></thead>
+    <tbody>
+      <tr><td class="k">스트릭 카운터 (0 리셋)</td><td>이 앱의 정체성 선언. Lally · Milkman과 정면 배치</td></tr>
+      <tr><td class="k">금전 예치 · 벌칙</td><td>내재 동기를 떨어뜨리고, 챌린저스가 이 모델로 수익을 못 냄</td></tr>
+      <tr><td class="k">소셜 · 친구 · 팔로우</td><td>투두메이트의 축. 그 앱의 반복 불만이 SNS화</td></tr>
+      <tr><td class="k">랭킹 · 리더보드</td><td>열품타의 축. 비교는 자기효능감을 떨어뜨림</td></tr>
+      <tr><td class="k">캐릭터 육성 · 게임 요소</td><td>Finch · Habitica가 점유한 축</td></tr>
+      <tr><td class="k">AI 자동 일정 배치</td><td>Motion · Reclaim이 상용화. 저가 앱이 감당 못 하는 원가</td></tr>
+      <tr><td class="k">협업 · 팀 · 공유 캘린더</td><td>개인용 제품</td></tr>
+      <tr><td class="k">타 캘린더 동기화</td><td>개발 비용 큼. 연동을 원하는 사용자는 이미 그 캘린더를 씀</td></tr>
+      <tr><td class="k">우선순위 매트릭스</td><td>입력 부담만 늘림. 우선순위는 목록 순서(드래그)로 표현</td></tr>
+      <tr><td class="k">메모 · 일기 · 기분 기록</td><td>하루콩의 축</td></tr>
+      <tr><td class="k">웹 · PC 버전</td><td>1차는 iOS 단일</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 5 -->
+<section id="s5">
+  <h2><span class="n">5</span>기능 기획</h2>
+  <p class="sub">주기능 4개에 전부 겁니다. 나머지는 부기능이고, 없어도 제품이 성립합니다.</p>
+
+  <h3><span class="k">5.1</span>핵심 기능</h3>
+  <div class="kv">
+    <div><dt>핵심 1</dt><dd><strong>플랜B — 하나의 루틴에 대체 실행을 둔다</strong>
+      <small>루틴을 만들 때 선택 입력란 하나가 더 있습니다. <em>"이걸 못 하는 날엔?"</em> 예: <code>헬스장 45분</code> → <code>집에서 스쿼트 10분</code></small>
+      <ul style="font-size:13.5px;color:var(--ink-2);margin:8px 0 0">
+        <li><strong>입력을 강제하지 않습니다.</strong> 같은 루틴을 2회 연속 놓치면 앱이 먼저 제안합니다.</li>
+        <li><strong>플랜B 라이브러리</strong> — 유형별 대안을 미리 제안(운동 → 스트레칭 10분 / 계단 오르기 / 산책 15분). 입력 부담을 없앱니다.</li>
+        <li><strong>플랜B 실행도 "수행"으로 집계합니다.</strong> 색만 다르게 표시하고, "차선"이나 "실패한 날"로 표시하지 않습니다.</li>
+      </ul>
+    </dd></div>
+    <div><dt>핵심 2</dt><dd><strong>알림에서 바로 끝낸다</strong>
+      <small>알림을 길게 눌러 <code>했어요</code> · <code>플랜B로</code> · <code>오늘은 쉼</code> · <code>30분 뒤</code> 중 하나를 고릅니다. 앱을 열지 않고 하루가 끝납니다. iOS 알림 액션으로 구현하며, 무음 알림 모드를 제공합니다.</small>
+      <small style="margin-top:6px"><b>정직하게 짚을 것</b> — 알림 자체의 효과는 크지 않습니다(저축 현장실험 +3.2%p). 차별점은 "알림을 보낸다"가 아니라 <b>"알림 안에서 플랜B를 고를 수 있다"</b>입니다. 핵심 1과 결합될 때만 의미가 있습니다.</small>
+    </dd></div>
+    <div><dt>핵심 3</dt><dd><strong>리커버리 — 결손 다음에 개입한다</strong>
+      <ul style="font-size:13.5px;color:var(--ink-2);margin:6px 0 0">
+        <li><strong>개입 시점은 결손이 난 순간이 아니라 다음 기회입니다.</strong> 못 한 밤에 팝업을 띄우면 자책만 남습니다.</li>
+        <li>문구 원칙 — ✕ <em>"3일 연속 실패했어요"</em> → ○ <em>"어제는 쉬었네요. 오늘 이어서 해볼까요?"</em></li>
+        <li>복귀했을 때 <strong>말로 긍정 피드백</strong>을 줍니다. 포인트·코인이 아니라. (칭찬은 내재 동기를 높입니다 — Deci 1999)</li>
+        <li><strong>연속 일수를 0으로 리셋하지 않습니다.</strong> 비율로 표시 — <code>이번 달 18/22일</code>, <code>최장 공백 2일</code></li>
+      </ul>
+    </dd></div>
+    <div><dt>핵심 4</dt><dd><strong>복귀율 — 지표를 새로 정의한다</strong>
+      <small>기존 앱의 지표는 전부 달성률이고, 그건 실패를 강조하는 지표입니다. 우리는 다른 걸 셉니다. 전부 기기 안에서 계산합니다.</small>
+    </dd></div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>지표</th><th>정의</th><th>왜</th></tr></thead>
+    <tbody>
+      <tr><td class="k">복귀율</td><td>결손 후 <strong>다음 기회에 수행</strong>한 비율 (플랜B 포함)</td><td>대표 지표. 시장에 없는 지표라 브랜드 자산이 됩니다</td></tr>
+      <tr><td class="k">최장 공백</td><td>연속으로 놓친 최대 일수</td><td>"연속 성공"이 아니라 "연속 실패"를 관리 대상으로</td></tr>
+      <tr><td class="k">플랜B 비율</td><td>전체 수행 중 플랜B 비중</td><td>높다고 나쁜 게 아닙니다. <strong>루틴 난이도 조정 신호</strong></td></tr>
+      <tr><td class="k">수행률</td><td>기간별 · 카테고리별</td><td>기본기. 있어야 하지만 메인 화면 최상단은 아닙니다</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><span class="k">5.2</span>기능 우선순위</h3>
+  <div class="tw"><table>
+    <thead><tr><th>우선순위</th><th>기능</th><th>내용</th><th>시점</th></tr></thead>
+    <tbody>
+      <tr><td><span class="pill p0">P0</span></td><td class="k">플랜B</td><td>대체 실행 입력 · 2회 결손 시 제안 · 라이브러리</td><td>Phase 1</td></tr>
+      <tr><td><span class="pill p0">P0</span></td><td class="k">알림 액션</td><td>4개 선택지 · 무음 모드 · 앱 실행 없이 기록</td><td>Phase 0 시제품 → Phase 1</td></tr>
+      <tr><td><span class="pill p0">P0</span></td><td class="k">리커버리</td><td>결손 감지 → 다음 기회 개입 → 복귀 피드백 · 리셋 없음</td><td>Phase 1</td></tr>
+      <tr><td><span class="pill p0">P0</span></td><td class="k">복귀율 통계</td><td>복귀율 · 최장 공백 · 플랜B 비율 · 수행률</td><td>Phase 1</td></tr>
+      <tr><td><span class="pill p0">P0</span></td><td class="k">캘린더 + 목록 뷰</td><td>월 캘린더 상단, 날짜별 목록 하단, 길게 눌러 드래그 순서</td><td>Phase 1</td></tr>
+      <tr><td><span class="pill p0">P0</span></td><td class="k">홈 위젯</td><td>홈 화면에서 바로 체크. 원칙 2의 필수 조건</td><td>Phase 1</td></tr>
+      <tr><td><span class="pill">P1</span></td><td class="k">온보딩</td><td>첫 루틴 등록을 "1/5 완료"로 표시. 0%에서 시작시키지 않음 (Kivetz 2006: 15.6일→12.7일)</td><td>Phase 2</td></tr>
+      <tr><td><span class="pill">P1</span></td><td class="k">주간 리포트</td><td>주 1회, 이미지 저장·공유 가능. "나에게 보고하는" 형식 (Harkin 2016)</td><td>Phase 2</td></tr>
+      <tr><td><span class="pill">P1</span></td><td class="k">목표 → 하위 목표</td><td>상위 목표 아래 체크리스트, 단순 비율 진행률</td><td>Phase 2</td></tr>
+      <tr><td><span class="pill">P1</span></td><td class="k">주 단위 루틴 (옵션)</td><td>"주 4회 운동" — 요일 고정 해제. A안과 병행 A/B 비교</td><td>Phase 1 옵션</td></tr>
+      <tr><td><span class="pill p2">P2</span></td><td class="k">자연어 · 음성 입력</td><td>네이버 캘린더가 무료로 제공 — 차별점 아님. AI 사용료 발생 → 유료 영역</td><td>Phase 3</td></tr>
+      <tr><td><span class="pill p2">P2</span></td><td class="k">클라우드 백업 · 동기화</td><td>서버 비용 발생 → 유료 영역</td><td>Phase 3</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><span class="k">5.3</span>MVP 범위</h3>
+  <div class="two">
+    <div class="lock">
+      <h4>MVP에 들어가는 것 (Phase 1)</h4>
+      <ul>
+        <li>루틴 · 투두 만들기 · 보기 · 고치기 · 지우기</li>
+        <li>캘린더 + 목록 한 화면, 드래그 순서, 탭 체크, 스와이프 처리</li>
+        <li>플랜B 입력 · 제안 · 라이브러리</li>
+        <li>알림 액션 4택 · 무음 모드</li>
+        <li>리커버리 로직 · 복귀 피드백</li>
+        <li>복귀율 통계 (기기 내 계산)</li>
+        <li>홈 위젯</li>
+        <li>기기 내 저장 · 오프라인 동작 · 다크모드</li>
+      </ul>
+    </div>
+    <div class="x">
+      <h4>MVP에서 뺀 것</h4>
+      <ul>
+        <li>온보딩 · 광고 — Phase 2 (제품이 완성된 뒤 설계)</li>
+        <li>주간 리포트 · 하위 목표 — Phase 2</li>
+        <li>계정 · 서버 · 클라우드 동기화 — Phase 3</li>
+        <li>AI 자연어 · 음성 입력 — Phase 3</li>
+        <li>Android — Phase 3</li>
+        <li>§4.3의 "하지 않는 것" 전부</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note"><b>MVP 완료 조건</b> — 팀 전원이 자기 진짜 일정을 넣고 <b>2주 이상 매일 씀</b>(도그푸딩). 데모로 눌러보는 게 아닙니다.</div>
+</section>
+
+<!-- 6 -->
+<section id="s6">
+  <h2><span class="n">6</span>UX 설계</h2>
+  <p class="sub">뷰를 3개 만들지 않습니다. 캘린더 한 화면으로 끝냅니다. 이 앱에서 가장 중요한 디자인은 문구입니다.</p>
+
+  <h3><span class="k">6.1</span>사용자 플로우</h3>
+  <ol class="flow">
+    <li><span class="st">F1</span><div><b>첫 실행 → 온보딩</b><span>루틴 1개 등록을 유도. 등록 즉시 "1/5 완료" 진행 표시. 알림 권한 요청은 첫 루틴 등록 직후.</span></div></li>
+    <li><span class="st">F2</span><div><b>루틴 생성</b><span>이름 · 반복 요일(또는 주 N회) · 시간 → 선택 입력 "이걸 못 하는 날엔?" → 라이브러리에서 플랜B 선택 또는 직접 입력 → 저장.</span></div></li>
+    <li><span class="st">F3</span><div><b>일상 처리 (앱 밖)</b><span>알림 길게 누름 → 했어요 / 플랜B로 / 오늘은 쉼 / 30분 뒤. 또는 홈 위젯에서 탭 체크. 앱 실행 0회.</span></div></li>
+    <li><span class="st">F4</span><div><b>일상 처리 (앱 안)</b><span>캘린더에서 날짜 탭 → 목록에서 탭 체크 / 좌우 스와이프로 플랜B · 쉼 / 길게 눌러 드래그 순서 조정.</span></div></li>
+    <li class="br"><span class="st">F5</span><div><b>결손 → 리커버리</b><span>결손 감지(당일 아무 개입 없음) → 다음 기회 알림 문구 변경("어제는 쉬었네요") → 복귀 시 한 줄 긍정 피드백. 같은 루틴 2회 연속 결손 시 플랜B 설정 제안.</span></div></li>
+    <li><span class="st">F6</span><div><b>돌아보기</b><span>통계 탭에서 복귀율 · 최장 공백 · 플랜B 비율 확인 → 플랜B 비율이 높은 루틴의 난이도 조정 → 주간 리포트(Phase 2) 저장·공유.</span></div></li>
+  </ol>
+
+  <h3><span class="k">6.2</span>IA (정보 구조)</h3>
+  <div class="ia"><b>이어하루</b>
+├─ <b>홈</b> (기본 탭)
+│   ├─ 월 캘린더 — 날짜별 상태 점 (완료 <i>Sprout</i> · 플랜B <i>Clay</i> · 미완료 Mist)
+│   ├─ 선택 날짜 목록 — 루틴 + 투두 혼합, 필터(전체 / 루틴만 / 투두만)
+│   │   ├─ 탭: 완료 · 스와이프: 플랜B로 / 오늘은 쉼 · 길게 누름: 순서 이동
+│   │   └─ 항목 상세 — 편집 · 플랜B 변경 · 삭제
+│   └─ + 추가 → 루틴 생성 / 투두 생성
+├─ <b>통계</b>
+│   ├─ 복귀율 (최상단) · 최장 공백 · 플랜B 비율
+│   ├─ 수행률 (기간 · 카테고리)
+│   └─ 주간 리포트 (P1)
+├─ <b>설정</b>
+│   ├─ 알림 — 시간 · 무음 모드 · 선택지 구성
+│   ├─ 플랜B 라이브러리 관리
+│   ├─ 테마(라이트 / 다크) · 광고 없애기 · 이어하루 플러스 (Phase 3)
+│   └─ 데이터 — 내보내기 · 삭제 · 개인정보 처리방침
+└─ <b>앱 밖 진입점</b>
+    ├─ 알림 액션 (했어요 · 플랜B로 · 오늘은 쉼 · 30분 뒤)
+    └─ 홈 위젯 (오늘 항목 체크)</div>
+
+  <h3><span class="k">6.3</span>주요 화면</h3>
+  <div class="screen" role="img" aria-label="캘린더 상단, 그 아래 그날의 루틴과 투두 목록이 드래그 핸들과 함께 나열된 메인 화면 구조 예시">
+    <div class="hd">9월 · 홈 화면</div>
+    <div class="cal">
+      <span class="g">1</span><span class="on">2</span><span class="on">3</span><span class="b">4</span><span class="on">5</span><span class="g">6</span><span class="g">7</span>
+      <span class="on">8</span><span class="on">9</span><span class="g">10</span><span class="b">11</span><span class="on">12</span><span class="on">13</span><span class="g">14</span>
+    </div>
+    <div class="row"><span class="grip">⋮⋮</span><span class="lbl r">루틴</span><span class="nm">아침 스트레칭</span><span class="st done">완료</span></div>
+    <div class="row"><span class="grip">⋮⋮</span><span class="lbl r">루틴</span><span class="nm">헬스장 45분</span><span class="st pb">플랜B</span></div>
+    <div class="row"><span class="grip">⋮⋮</span><span class="lbl t">투두</span><span class="nm">보고서 초안 넘기기</span><span class="st">17:00</span></div>
+    <div class="row"><span class="grip">⋮⋮</span><span class="lbl t">투두</span><span class="nm">치과 예약 전화</span><span class="st">—</span></div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>화면</th><th>구성 · 동작</th></tr></thead>
+    <tbody>
+      <tr><td class="k">홈 (캘린더 + 목록)</td><td>상단 월 캘린더 — 날짜별 수행 상태를 점/배경색으로 표시. 하단은 선택한 날짜의 <strong>루틴과 투두를 한 목록에 섞어서</strong> 표시(좌측 라벨로 구분). 탭 한 번 완료, 좌우 스와이프로 플랜B · 쉼, <strong>길게 눌러 드래그</strong>로 순서 = 우선순위. 미완료는 <strong>회색</strong>.</td></tr>
+      <tr><td class="k">루틴 생성</td><td>이름 · 반복 · 시간 · <strong>"이걸 못 하는 날엔?"</strong> 선택 입력. 플랜B 라이브러리 칩 제안. 핵심 3화면 중 하나.</td></tr>
+      <tr><td class="k">통계</td><td>최상단 <strong>복귀율</strong>. 최장 공백 · 플랜B 비율 · 수행률. 숫자는 고정폭(tabular-nums). 하단 띠 광고(Phase 2).</td></tr>
+      <tr><td class="k">알림</td><td>시각 디자인을 거의 못 바꾸므로 <strong>문구가 곧 디자인</strong>. 상황별(첫 알림 / 재알림 / 결손 후 복귀 / 연속 결손) 문구 세트. 길게 누르면 4개 액션.</td></tr>
+      <tr><td class="k">복귀 화면</td><td>이 앱의 가장 어려운 화면. 위로가 과하면 나태해 보이고, 부족하면 다른 앱과 같아집니다. 기본은 한 줄 문구, 전체 화면 버전은 A/B 실험 대상.</td></tr>
+      <tr><td class="k">온보딩</td><td>첫 루틴 등록 = "1/5 완료". 광고 없음.</td></tr>
+      <tr><td class="k">홈 위젯</td><td>오늘 항목 2~4개, 탭으로 체크. 알림과 함께 "앱을 안 열어도 되는" 경험을 완성.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><span class="k">6.4</span>UX/UI 원칙</h3>
+  <h4>브랜드 성격</h4>
+  <div class="kv">
+    <div><dt>한 줄</dt><dd><strong>처음부터가 아니라, 이어서.</strong></dd></div>
+    <div><dt>역할</dt><dd>코치가 아니라 <strong>동료</strong>. 몰아붙이지 않고, 그렇다고 봐주지도 않습니다.</dd></div>
+    <div><dt>감정</dt><dd>다정하되 나태하지 않게. <strong>"괜찮아요"가 아니라 "이어서 하면 돼요".</strong> 실패를 미화하지 않고, 복귀를 축하합니다.</dd></div>
+    <div><dt>금기</dt><dd>사용자를 평가하지 않습니다. 다른 사용자와 비교하지 않습니다. 죄책감을 동력으로 쓰지 않습니다.</dd></div>
+  </div>
+
+  <h4>컬러 — 빨강이 없습니다</h4>
+  <p style="font-size:14.5px;color:var(--ink-2)">미완료는 경고가 아니라 중립 상태입니다. 빨강을 쓰지 않기로 했으므로 따뜻한 색(Clay)이 "경고"가 아니라 <strong>"다른 길"</strong>을 뜻할 수 있게 됩니다.</p>
+  <div class="sw">
+    <div><div class="chip" style="background:#1B1E1C"></div><div class="t"><b>Ink</b><code>#1B1E1C</code><span>기본 텍스트</span></div></div>
+    <div><div class="chip" style="background:#F7F8F5;border-bottom:1px solid #E2E4DE"></div><div class="t"><b>Paper</b><code>#F7F8F5</code><span>배경</span></div></div>
+    <div><div class="chip" style="background:#3E7D5A"></div><div class="t"><b>Sprout</b><code>#3E7D5A</code><span>완료 · 긍정 · 브랜드</span></div></div>
+    <div><div class="chip" style="background:#B5652F"></div><div class="t"><b>Clay</b><code>#B5652F</code><span><strong>플랜B 전용</strong></span></div></div>
+    <div><div class="chip" style="background:#8E938E"></div><div class="t"><b>Mist</b><code>#8E938E</code><span><strong>미완료</strong> · 중립</span></div></div>
+    <div><div class="chip" style="background:#E2E4DE"></div><div class="t"><b>Line</b><code>#E2E4DE</code><span>구분선 · 비활성</span></div></div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>다크모드 (필수)</th><th class="num">라이트</th><th class="num">다크</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Paper / Ink</td><td class="num">#F7F8F5 / #1B1E1C</td><td class="num">#131614 / #EDEFEA</td></tr>
+      <tr><td class="k">Sprout / Clay</td><td class="num">#3E7D5A / #B5652F</td><td class="num">#6BA383 / #D08A52</td></tr>
+      <tr><td class="k">Mist / Line</td><td class="num">#8E938E / #E2E4DE</td><td class="num">#797F79 / #292E2A</td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:13.5px;color:var(--ink-2)">본문 명암 대비는 WCAG AA 기준 4.5:1 이상. Mist 위의 텍스트와 Clay 위의 흰 글씨가 위험 구간이므로 확정 전 실측합니다.</p>
+
+  <h4>보이스 — 쓰는 말과 안 쓰는 말</h4>
+  <div class="two">
+    <div class="x">
+      <h4>안 쓰는 말</h4>
+      <ul>
+        <li>"실패", "실패했어요"</li>
+        <li>"연속 기록이 끊겼어요"</li>
+        <li>"3일째 안 하셨네요" · "아직도 안 하셨나요?"</li>
+        <li>"다시 처음부터" · "오늘도 못 하셨군요"</li>
+        <li>과한 응원 — "할 수 있어요!!", "파이팅!!"</li>
+      </ul>
+    </div>
+    <div class="o">
+      <h4>쓰는 말</h4>
+      <ul>
+        <li>"어제는 쉬었네요"</li>
+        <li>"오늘 이어서 해볼까요?"</li>
+        <li>"돌아오셨네요"</li>
+        <li>"이번 달 18일 하셨어요"</li>
+        <li>"오늘은 이걸로 대신할까요?"</li>
+        <li>담백하게. 느낌표는 최소한으로</li>
+      </ul>
+    </div>
+  </div>
+
+  <h4>타이포 · 아이콘</h4>
+  <div class="kv">
+    <div><dt>앱 화면</dt><dd><strong>Pretendard</strong> — 한글 글자 수가 많고 무료이며 굵기 조절이 자유롭습니다.</dd></div>
+    <div><dt>브랜드 · 광고</dt><dd><strong>Hahmlet</strong> — 로고 · 스토어 스크린샷 · 소개 페이지의 큰 글씨. 앱 본문에는 쓰지 않습니다.</dd></div>
+    <div><dt>숫자</dt><dd>고정폭 숫자(tabular-nums) 필수. 통계 화면에서 숫자가 흔들리면 신뢰가 떨어집니다.</dd></div>
+    <div><dt>로고 · 아이콘</dt><dd>워드마크 중심. 심볼은 "끊긴 선이 이어지는" 형태 하나. 아이콘은 선 스타일 단일 두께, 채움은 "선택됨"에만. <strong>캐릭터 · 마스코트 없음.</strong></dd></div>
+  </div>
+
+  <h4>디자인 점검표 — 모든 화면이 배포 전에 통과할 것</h4>
+  <ul style="font-size:14.5px">
+    <li>이 화면에 <strong>빨강</strong>이 있는가? → 있으면 잘못된 것</li>
+    <li>미완료 상태가 <strong>회색(Mist)</strong>으로 표시되는가?</li>
+    <li><strong>연속 일수가 0으로 리셋</strong>되는 표현이 있는가? → 제거</li>
+    <li>플랜B가 <strong>"차선"이나 "실패"로 표시</strong>되어 있지 않은가?</li>
+    <li>문구에 <strong>안 쓰는 말</strong>이 들어 있지 않은가?</li>
+    <li><strong>알림 · 복귀 · 플랜B 선택 구간</strong>인가? → 광고가 없어야 함</li>
+    <li>어두운 화면에서도 동일하게 읽히는가?</li>
+  </ul>
+</section>
+
+<!-- 7 -->
+<section id="s7">
+  <h2><span class="n">7</span>시스템 요구사항</h2>
+  <p class="sub">서버를 만들지 않는 것이 1차 목표입니다. 서버가 없으면 원가가 0이고, 원가가 0이면 핵심 기능을 전부 무료로 줄 수 있습니다.</p>
+
+  <h3><span class="k">7.1</span>플랫폼</h3>
+  <div class="kv">
+    <div><dt>1차</dt><dd><strong>iOS 네이티브</strong><small>알림 액션과 홈 위젯이 제품의 심장이므로, 크로스플랫폼 도구를 쓰더라도 <strong>이 두 영역은 iOS · Android 각각의 네이티브 방식으로 따로 구현</strong>해야 합니다. 여기서 타협하면 제품이 성립하지 않습니다. 기술 방식은 Phase 0에서 결정.</small></dd></div>
+    <div><dt>2차</dt><dd>Android — Phase 3. 알림 액션 · 위젯 네이티브 재구현 전제</dd></div>
+    <div><dt>동작 조건</dt><dd><strong>인터넷 없이 완전 동작.</strong> Phase 2까지 네트워크 의존 기능 없음(광고 SDK 제외)</dd></div>
+  </div>
+
+  <h3><span class="k">7.2</span>계정</h3>
+  <div class="kv">
+    <div><dt>Phase 0~2</dt><dd><strong>계정 없음.</strong> 설치 즉시 사용, 회원가입 · 로그인 화면 없음<small>데이터가 기기 안에만 있으므로 계정이 필요 없습니다. 온보딩 이탈 요인도 하나 줄어듭니다. 광고 제거는 App Store 인앱 결제(구매 복원)로 계정 없이 처리합니다.</small></dd></div>
+    <div><dt>Phase 3</dt><dd>클라우드 동기화 · 플러스 구독 도입 시 계정 필요. Apple 로그인 우선 검토(App Store 정책상 소셜 로그인 제공 시 필수)<small>이 시점에 기존 기기 데이터를 계정으로 이전하는 마이그레이션 경로를 설계해야 합니다.</small></dd></div>
+  </div>
+
+  <h3><span class="k">7.3</span>데이터</h3>
+  <div class="kv">
+    <div><dt>저장 위치</dt><dd><strong>기기 내 저장(로컬 DB).</strong> Phase 2까지 서버 없음. 기록 보관 12개월 무료(기기 저장이면 원가 0)</dd></div>
+    <div><dt>핵심 구조</dt><dd><strong>"루틴 정의"(설계도)와 "날짜별 실제 항목"(인스턴스)을 분리</strong><small>루틴은 반복되므로 분리해야 순서 · 상태 · 플랜B 실행 여부를 날짜마다 따로 기록할 수 있습니다. 여기서 구조를 잘못 잡으면 통계까지 전부 뒤집힙니다. 화면보다 먼저 확정합니다.</small></dd></div>
+    <div><dt>필수 항목</dt><dd>날짜별 <code>sort_order</code>(드래그 순서 = 우선순위) · 수행 상태 4종 <code>완료 / 플랜B / 쉼 / 미완료</code> · 플랜B 정의(루틴당 1개 + 라이브러리) · 루틴 반복 규칙(요일 고정 또는 주 N회)</dd></div>
+    <div><dt>통계 계산</dt><dd>복귀율 · 최장 공백 · 플랜B 비율 · 수행률 전부 <strong>기기 내 계산</strong></dd></div>
+    <div><dt>행동 기록</dt><dd><strong>기록 규칙표(이벤트 택소노미)를 개발 착수 전에 PM이 확정</strong><small>예: 플랜B 설정 → <code>planb_set</code>(루틴 종류 포함). 알림 응답 · 복귀 · 결손 등. 여기서 빠뜨린 항목은 나중에 절대 셀 수 없습니다. 우리가 축적하는 자산은 앱이 아니라 "사람들이 언제 어떻게 무너지고 무엇이 있으면 돌아오는가"에 대한 데이터입니다.</small></dd></div>
+    <div><dt>Phase 3</dt><dd>클라우드 백업 · 기기 간 동기화 · 기록 무제한 보관 · 이미지 첨부 — 서버 저장 공간과 통신 비용이 사용자 수에 비례하므로 유료 영역</dd></div>
+  </div>
+
+  <h3><span class="k">7.4</span>알림</h3>
+  <div class="kv">
+    <div><dt>방식</dt><dd><strong>로컬 알림 + 알림 액션.</strong> 서버 푸시 불필요<small>루틴 시간이 기기 안에 있으므로 기기가 스스로 알림을 예약합니다. APNs는 애플이 무료로 제공하므로 Phase 3에 서버 푸시를 붙여도 원가는 사실상 0입니다.</small></dd></div>
+    <div><dt>액션</dt><dd><code>했어요</code> · <code>플랜B로</code> · <code>오늘은 쉼</code> · <code>30분 뒤</code> — 앱을 열지 않고 기기 DB에 기록<small>Phase 0의 알림 액션 시제품(PoC)이 이 요구사항의 기술 검증입니다. 원하는 만큼 동작하지 않으면 제품 개념을 다시 짭니다.</small></dd></div>
+    <div><dt>문구 분기</dt><dd>첫 알림 / 재알림 / 결손 후 복귀 / 연속 결손 — 상황별 문구 세트를 디자인이 설계</dd></div>
+    <div><dt>재알림</dt><dd>결손 당일에는 개입 없음. <strong>다음 기회 시점</strong>의 알림 문구를 바꿈. 같은 루틴 2회 연속 결손 시 플랜B 설정 제안</dd></div>
+    <div><dt>무음 모드</dt><dd>소리 · 진동 없이 배너만. 근무시간 회피 스케줄 설정</dd></div>
+    <div><dt>권한</dt><dd>알림 권한 요청은 첫 루틴 등록 직후(맥락이 생긴 뒤). 거부 시 홈 위젯이 대체 진입점</dd></div>
+  </div>
+
+  <h3><span class="k">7.5</span>외부 API · SDK</h3>
+  <div class="tw"><table>
+    <thead><tr><th>구분</th><th>내용</th><th>시점</th><th>원가</th></tr></thead>
+    <tbody>
+      <tr><td class="k">App Store 인앱 결제</td><td>광고 없애기(1회 구매) · 플러스 구독 · 구매 복원</td><td>Phase 2 / 3</td><td>수수료</td></tr>
+      <tr><td class="k">광고 SDK</td><td>띠 광고 · 전면 광고(1일 1회 상한) · 리워드 광고(AI 충전 · 테마). §8 배치 원칙 준수</td><td>Phase 2</td><td>0 (수익)</td></tr>
+      <tr><td class="k">TestFlight</td><td>비공개 베타 배포 30~50명</td><td>Phase 2</td><td>0</td></tr>
+      <tr><td class="k">AI 언어 모델 API</td><td>자연어 · 음성 입력, 일정 쪼개기 제안. <strong>요청마다 실비</strong> → 횟수 세기 + 광고 시청 충전 로직 필수</td><td>Phase 3</td><td>요청당 과금</td></tr>
+      <tr><td class="k">클라우드 저장소</td><td>백업 · 동기화 · 주간 리포트 메일</td><td>Phase 3</td><td>사용자 수 비례</td></tr>
+      <tr><td class="k">연동 안 함</td><td>구글 · 네이버 캘린더 동기화, 소셜 로그인(Phase 2까지), 분석 외부 전송(최소화)</td><td>—</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3><span class="k">7.6</span>개인정보 · 보안</h3>
+  <div class="kv">
+    <div><dt>수집 원칙</dt><dd><strong>Phase 2까지 개인 식별 정보를 수집하지 않습니다.</strong> 계정 없음, 서버 없음. 루틴 · 수행 기록은 기기 밖으로 나가지 않습니다</dd></div>
+    <div><dt>스토어 심사</dt><dd>개인정보 처리방침 · 수집 데이터 항목 신고(광고 SDK 포함) · 연령 등급 — PM이 Phase 2에 준비</dd></div>
+    <div><dt>광고 · 추적</dt><dd>iOS 앱 추적 투명성(ATT) 권한 요청 문구 준비. 거부 시에도 비맞춤 광고로 동작</dd></div>
+    <div><dt>사용자 통제</dt><dd>설정에서 데이터 내보내기 · 전체 삭제 제공. 앱 삭제 = 데이터 삭제(Phase 2까지)</dd></div>
+    <div><dt>Phase 3</dt><dd>계정 · 클라우드 도입 시 전송 구간 암호화, 개인정보 처리방침 개정, 국내 개인정보보호법 기준 준수. AI 입력 텍스트의 외부 전송 고지 필수</dd></div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section id="s8">
+  <h2><span class="n">8</span>사업 및 운영</h2>
+  <p class="sub">무료가 기본입니다. 유료는 "우리가 실제로 돈을 쓰는 것"만 받습니다.</p>
+
+  <h3><span class="k">8.1</span>수익 모델</h3>
+  <p>실패를 관리해주는 앱이 실패 관리 기능을 유료로 팔면 제품 철학과 모순입니다. 국내 가격 기준선도 매우 낮습니다 — 투두메이트 연 7,500원, 한국 성인은 이미 구독 3~4개를 쓰며 월 지출 3만원 미만이 최다입니다. 그래서 과금 기준을 기능의 가치가 아니라 <strong>우리 쪽 원가</strong>로 잡습니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>기능</th><th>우리 원가</th><th class="num">과금</th></tr></thead>
+    <tbody>
+      <tr><td class="k">플랜B · 알림 액션 · 리커버리<br>복귀율 통계 · 캘린더+목록 · 위젯</td><td>0 — 전부 기기 안에서 끝납니다</td><td class="num free">영구 무료</td></tr>
+      <tr><td class="k">알림</td><td>≈0 — 로컬 알림, APNs 무료</td><td class="num free">영구 무료</td></tr>
+      <tr><td class="k">기록 보관</td><td>기기 저장이면 0</td><td class="num free">무료 (12개월)</td></tr>
+      <tr><td class="k">광고 제거</td><td>포기하는 광고 수익</td><td class="num paid">유료</td></tr>
+      <tr><td class="k">AI 자연어 · 음성 입력</td><td>요청마다 실비</td><td class="num paid">횟수 제한 + 유료</td></tr>
+      <tr><td class="k">클라우드 백업 · 동기화</td><td>서버 · 통신 비용, 사용자 수 비례</td><td class="num paid">유료</td></tr>
+      <tr><td class="k">기록 무제한 · 이미지 첨부</td><td>저장 공간이 계속 쌓임</td><td class="num paid">유료</td></tr>
+    </tbody>
+  </table></div>
+  <h4>상품 — 두 개만 만듭니다</h4>
+  <div class="tw"><table>
+    <thead><tr><th>상품</th><th>포함</th><th class="num">가격(안)</th></tr></thead>
+    <tbody>
+      <tr><td class="k">무료</td><td>주기능 전부 + 부기능 대부분 + 광고<br><span class="dim">AI 입력 월 10회 (Phase 3)</span></td><td class="num free">₩0</td></tr>
+      <tr><td class="k">광고 없애기</td><td>광고만 제거. 그 외 무료와 동일<br><span class="dim">한 번 사면 끝 — 한국 사용자가 구독보다 편하게 받아들이는 형태</span></td><td class="num paid">₩19,000<br><span class="dim">평생 · 1회</span></td></tr>
+      <tr><td class="k">이어하루 플러스</td><td>광고 제거 + AI 입력 월 300회 + 클라우드 백업 · 동기화 + 기록 무제한 + 주간 리포트 메일<br><span class="dim">Phase 3</span></td><td class="num paid">₩3,900<span class="dim">/월</span><br>₩25,000<span class="dim">/년</span></td></tr>
+    </tbody>
+  </table></div>
+  <p style="font-size:14.5px"><strong>광고를 보면 AI 횟수가 충전됩니다.</strong> 무료 사용자가 월 10회를 다 쓰면 광고 1회 시청 → 5회 충전. AI 사용료를 광고 수익이 그대로 메우고, 돈 낼 생각이 없는 사용자도 기능을 쓸 수 있습니다.</p>
+  <div class="note warn"><b>기대치는 냉정하게</b> — 구독 앱 매출 중간값은 월 $492, 59.3%가 누적 $1,000 미만입니다. 다만 생활 도구 계열은 첫 구독 갱신율 58.1%로 전 분야 1위입니다. <b>낮은 가격 · 긴 유지</b>로 설계하고, 광고 손익분기는 출시 후 eCPM 실측으로 계산합니다.</div>
+
+  <h3><span class="k">8.2</span>운영 정책</h3>
+  <h4>광고 배치 원칙 — 이걸 어기면 브랜드가 죽습니다</h4>
+  <div class="two">
+    <div class="x">
+      <h4>광고를 절대 넣지 않는 곳</h4>
+      <ul>
+        <li>알림 및 알림에서 진입한 화면</li>
+        <li>복귀 화면 — 무너진 순간에 광고를 보이면 끝입니다</li>
+        <li>플랜B 선택 순간</li>
+        <li>온보딩 전 구간</li>
+      </ul>
+    </div>
+    <div class="o">
+      <h4>광고를 넣는 곳</h4>
+      <ul>
+        <li>통계 탭 하단 띠 광고</li>
+        <li>주간 리포트 하단</li>
+        <li>앱 실행 시 전면 광고 — <strong>1일 1회 상한</strong></li>
+        <li>리워드 광고 — AI 충전, 테마 잠금 해제</li>
+      </ul>
+    </div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>정책</th><th>내용</th></tr></thead>
+    <tbody>
+      <tr><td class="k">문구 · 콘텐츠</td><td>모든 사용자 노출 문구는 §6.4 보이스 규칙과 디자인 점검표를 통과해야 배포. 알림 문구 변경도 동일 절차</td></tr>
+      <tr><td class="k">기능 추가</td><td>§4.3 "하지 않는 것"에 해당하는 요청은 거절. 제작 순서 변경 요청을 막는 것이 PM의 역할</td></tr>
+      <tr><td class="k">마케팅 채널</td><td>학술 근거의 콘텐츠화("하루 걸러도 습관은 안 망가진다") · 수요 문장이 이미 있는 커뮤니티(클리앙 등) 직접 참여 · ASO 키워드 "작심삼일 · 다시 시작 · 미루기" 계열</td></tr>
+      <tr><td class="k">유료 광고 집행</td><td><strong>7일 재방문율이 벤치마크를 넘긴 뒤에만.</strong> 새는 양동이에 물을 붓지 않습니다</td></tr>
+      <tr><td class="k">고객 응대</td><td>리뷰 · 문의는 브랜드 보이스로 응답. 사용자를 평가하거나 비교하는 표현 금지</td></tr>
+      <tr><td class="k">가격 변경</td><td>광고 없애기 평생 구매자의 권리는 유지. 플러스 가격 조정은 기존 구독자 유예</td></tr>
+      <tr><td class="k">서버 원칙</td><td>Phase 2까지 서버를 만들지 않음. Phase 3에서 처음으로 서버 비용이 발생하며, 유료 상품 오픈과 동시</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 9 -->
+<section id="s9">
+  <h2><span class="n">9</span>성공 기준</h2>
+  <p class="sub">벤치마크는 공개 데이터 실측값이고, 목표치는 우리가 설정한 값입니다. 실패 기준은 지표를 보기 전에 정해둡니다.</p>
+
+  <h3><span class="k">9.1</span>KPI</h3>
+  <div class="thesis">
+    <span class="cap">대표 지표 (North Star)</span>
+    <p>주간 복귀율 — 그 주에 결손이 난 루틴 중, 다음 기회에 수행된 비율</p>
+  </div>
+  <p style="font-size:14.5px">제품 가치와 직결되고, 리텐션보다 먼저 움직이며(복귀한 사용자는 앱을 지우지 않음), 시장에 없는 지표라 브랜드 자산이 됩니다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>지표</th><th class="num">시장 벤치마크</th><th class="num">우리 목표</th><th>성격</th></tr></thead>
+    <tbody>
+      <tr><td class="k">주간 복귀율</td><td class="num dim">신규 지표</td><td class="num"><strong>50%</strong></td><td>3개월 실측 후 재설정</td></tr>
+      <tr><td class="k">플랜B 설정률</td><td class="num dim">—</td><td class="num"><strong>40%</strong></td><td><strong>핵심 가설 검증</strong></td></tr>
+      <tr><td class="k">알림 내 응답률</td><td class="num dim">—</td><td class="num"><strong>35%</strong></td><td>원칙 2 검증</td></tr>
+      <tr><td class="k">설치 다음날 재방문 (D1)</td><td class="num">iOS 25.4%</td><td class="num">35%</td><td>온보딩 품질</td></tr>
+      <tr><td class="k">30일 뒤 재방문 (D30)</td><td class="num">iOS 5.3%</td><td class="num">12%</td><td>벤치마크 2배</td></tr>
+      <tr><td class="k">30일 내 삭제율</td><td class="num">46.1%</td><td class="num">30% 이하</td><td>제품 핵심 주장의 증명</td></tr>
+      <tr><td class="k">광고 제거 구매율</td><td class="num dim">—</td><td class="num">활성 사용자 5%</td><td>수익</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note warn"><b>실패 판정 기준 — 아래 중 2개 이상이면 §10.4의 대안으로 넘어갑니다</b>
+  <ul style="margin:8px 0 0">
+    <li><b>플랜B 설정률 20% 미만</b> → 핵심 가설 기각. 사람들이 대안을 미리 정하지 않는다는 뜻</li>
+    <li>알림 내 응답률 15% 미만 → 원칙 2 구현 실패</li>
+    <li>30일 뒤 재방문 5% 미만 → 벤치마크 미달</li>
+  </ul></div>
+
+  <h3><span class="k">9.2</span>사용자 테스트 방법</h3>
+  <div class="tw"><table>
+    <thead><tr><th>단계</th><th>방법</th><th>규모 · 기간</th><th>판정</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Phase 0<br>인터뷰</td><td>"루틴 앱 써봤다가 그만둔 사람" 모집. 플랜B 개념 수용도 + 이름 후보 3개 첫인상</td><td class="num">10명</td><td>10명 중 6명 이상 "쓰겠다"</td></tr>
+      <tr><td class="k">Phase 0<br>기술 검증</td><td>알림 액션 시제품 — 앱을 열지 않고 기록되는가</td><td class="num">2주</td><td>실제 동작 여부. 안 되면 개념 재설계</td></tr>
+      <tr><td class="k">Phase 1<br>도그푸딩</td><td>팀 전원이 자기 진짜 일정을 넣고 매일 사용. 내부 피드백 수집</td><td class="num">2주 이상</td><td>팀 전원 2주 이상 매일 씀</td></tr>
+      <tr><td class="k">Phase 2<br>비공개 베타</td><td>TestFlight 배포. 플랜B 설정률 · 알림 응답률 · 7일 재방문 측정</td><td class="num">30~50명 · 4주</td><td>실패 기준에 걸리면 <strong>출시하지 않고</strong> 대안으로</td></tr>
+      <tr><td class="k">Phase 2<br>A/B 테스트</td><td>베타에서는 <strong>1 · 4번만</strong> 실행(사용자 수가 적을 때 여러 개를 돌리면 원인을 알 수 없음). 출시 후 나머지 순차</td><td class="num">2개 → 8개</td><td>아래 판정 지표</td></tr>
+    </tbody>
+  </table></div>
+  <div class="tw"><table>
+    <thead><tr><th class="num">#</th><th>비교 항목</th><th>A</th><th>B</th><th>판정 지표</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td class="k">플랜B 입력 시점</td><td>루틴 만들 때 바로</td><td>2회 놓친 뒤 제안</td><td>플랜B 설정률</td></tr>
+      <tr><td class="num">2</td><td class="k">개입 타이밍</td><td>놓친 당일 저녁</td><td>다음 기회 아침</td><td>복귀율</td></tr>
+      <tr><td class="num">3</td><td class="k">통계 첫 화면</td><td>복귀율</td><td>수행률</td><td>통계 탭 재방문</td></tr>
+      <tr><td class="num">4</td><td class="k">온보딩 진행 표시</td><td>0%에서 시작</td><td>1/5 채워서 시작</td><td>첫 루틴 등록 완료율</td></tr>
+      <tr><td class="num">5</td><td class="k">알림 선택지 개수</td><td>4개</td><td>2개</td><td>알림 응답률</td></tr>
+      <tr><td class="num">6</td><td class="k">플랜B 제안 개수</td><td>3개 중 선택</td><td>1개 추천</td><td>플랜B 설정률</td></tr>
+      <tr><td class="num">7</td><td class="k">스트릭 대체 표시</td><td>"이번 달 18/22일"</td><td>"최근 7일 중 5일"</td><td>30일 재방문</td></tr>
+      <tr><td class="num">8</td><td class="k">복귀 피드백 강도</td><td>한 줄 문구</td><td>전체 화면</td><td>복귀율 · 삭제율</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- 10 -->
+<section id="s10">
+  <h2><span class="n">10</span>개발 계획</h2>
+  <p class="sub">기술 위험이 큰 것부터, 가설 검증이 되는 것부터 만듭니다. 순서에 근거가 있으므로 바꾸지 않습니다.</p>
+
+  <h3><span class="k">10.1</span>MVP</h3>
+  <div class="kv">
+    <div><dt>정의</dt><dd>주기능 4개(플랜B · 알림 액션 · 리커버리 · 복귀율) + 캘린더 목록 + 홈 위젯이 <strong>기기 안에서, 서버 없이, 인터넷 없이</strong> 동작하는 iOS 앱</dd></div>
+    <div><dt>범위</dt><dd>§5.3 "MVP에 들어가는 것" 전부. 온보딩 · 광고 · 리포트 · 계정은 제외</dd></div>
+    <div><dt>완료 조건</dt><dd>팀 전원 2주 이상 매일 실사용(도그푸딩)</dd></div>
+    <div><dt>검증 가설</dt><dd><strong>사람들은 방해 상황에 대한 대안을 <em>미리</em> 정할 의향이 있다.</strong> 베타에서 플랜B 설정률 40%를 넘지 못하면 §10.4로</dd></div>
+  </div>
+
+  <h3><span class="k">10.2</span>개발 단계 (제작 순서)</h3>
+  <ol class="steps">
+    <li class="key"><h4>알림 액션 시제품 (PoC)</h4><p>알림에서 <code>했어요</code> / <code>플랜B로</code>를 눌렀을 때 앱을 열지 않고 기록되는가. 딱 이것만 되는 껍데기.</p><p class="why"><b>왜 1번인가</b> — 제품의 심장이고 기술 위험이 가장 큽니다. 다른 걸 다 만든 뒤에 알면 늦습니다.</p></li>
+    <li class="key"><h4>데이터 구조 확정 + 루틴/투두 기본 동작</h4><p>루틴 정의 / 날짜별 인스턴스 분리, 순서 · 플랜B · 수행 상태 4종. 만들기 · 보기 · 고치기 · 지우기.</p><p class="why"><b>왜 여기인가</b> — 구조를 잘못 잡으면 6번 통계까지 전부 뒤집힙니다. 화면보다 먼저.</p></li>
+    <li><h4>캘린더 + 목록 화면</h4><p>월 캘린더, 날짜 탭, 하단 목록, 길게 눌러 드래그, 탭 체크, 스와이프 처리.</p><p class="why">이 시점에 "쓸 수 있는 투두 앱"이 됩니다. 팀 내부 매일 사용 시작.</p></li>
+    <li class="key"><h4>플랜B</h4><p>루틴 생성 시 대체 실행 입력, 2회 결손 시 제안, 라이브러리, 알림 · 스와이프에서 선택.</p><p class="why"><b>핵심 가설이 여기서 검증됩니다.</b></p></li>
+    <li><h4>리커버리 로직</h4><p>결손 감지 → 다음 기회 개입 → 복귀 시 긍정 피드백. 연속 일수 리셋 없음.</p><p class="why">4번이 있어야 5번의 "복귀"에 선택지가 생깁니다. 순서를 바꾸면 안 됩니다.</p></li>
+    <li><h4>통계 — 복귀율</h4><p>복귀율 · 최장 공백 · 플랜B 비율 · 수행률. 전부 기기 안에서 계산.</p><p class="why">2~5번 데이터가 쌓여야 의미가 생깁니다. 내부 사용 2주 뒤에 붙입니다.</p></li>
+    <li><h4>홈 위젯</h4><p>홈 화면 위젯에서 바로 체크.</p><p class="why">알림(1번)과 위젯(7번)이 함께 있어야 "앱을 안 열어도 되는" 경험이 완성됩니다.</p></li>
+    <li><h4>온보딩 + 광고 붙이기</h4><p>첫 루틴 등록을 "1/5 완료"로 표시. 광고는 §8 배치 원칙대로.</p><p class="why">온보딩은 제품이 다 만들어진 뒤에 설계해야 정확합니다. 광고는 마지막에 붙여야 경험을 해치는지 판단할 수 있습니다.</p></li>
+    <li><h4>비공개 베타 → 출시</h4><p>TestFlight 30~50명, 4주. 플랜B 설정률 · 알림 응답률 · 7일 재방문 측정 후 출시 판단.</p><p class="why">§9 실패 기준에 걸리면 <b>출시하지 않고 §10.4의 대안으로 넘어갑니다.</b></p></li>
+  </ol>
+
+  <h3><span class="k">10.3</span>일정</h3>
+  <div class="tw"><table>
+    <thead><tr><th>Phase</th><th>범위</th><th>끝났다고 말할 수 있는 조건</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Phase 0<br><span class="dim">설계</span></td><td>경쟁앱 6종 실기기 검증 · 사용자 인터뷰 10명 · 데이터 구조 확정 · 브랜드 기본형 · 알림 액션 시제품 (제작 1)</td><td>알림 액션이 실제로 동작하고, 플랜B 개념에 10명 중 6명 이상이 "쓰겠다"</td></tr>
+      <tr><td class="k">Phase 1<br><span class="dim">MVP</span></td><td>제작 2~7 · 팀 내부 매일 사용 · A/B 1 · 4번 설계</td><td>팀 전원이 2주 이상 매일 씀</td></tr>
+      <tr><td class="k">Phase 2<br><span class="dim">출시</span></td><td>제작 8~9 · ASO · 스토어 등록 · 광고 수익화 · 심사 서류</td><td>App Store 출시, 7일 재방문 측정 시작</td></tr>
+      <tr><td class="k">Phase 3<br><span class="dim">확장</span></td><td>서버 · 계정 · 클라우드 동기화 · AI 입력 · 플러스 상품 · Android</td><td>유료 상품 오픈. <strong>여기서 처음으로 서버 비용이 발생</strong></td></tr>
+    </tbody>
+  </table></div>
+
+  <h4>팀별 역할 · 산출물</h4>
+  <div class="tw"><table>
+    <thead><tr><th>팀</th><th>Phase 0</th><th>Phase 1</th><th>Phase 2~3</th><th>산출물</th></tr></thead>
+    <tbody>
+      <tr><td class="k">PM</td><td>경쟁앱 6종 실기기 검증 · 인터뷰 10명(이름 첫인상 포함) · 기능 명세서 · <strong>기록 규칙표(개발 착수 전)</strong></td><td>제작 순서 관리(변경 요청 차단) · 내부 피드백 · A/B 1 · 4번 운영</td><td>스토어 심사 서류 · 베타 지표 → 출시 판정 · 실패 시 대안 선정</td><td>검증 리포트 · 인터뷰 요약 · 기능 명세서 · 기록 규칙표 · 베타 판정 리포트</td></tr>
+      <tr><td class="k">개발</td><td><strong>알림 액션 시제품(최우선)</strong> · 기술 방식 결정 · 기기 내 데이터 구조</td><td>오프라인 · 기기 저장 · 캘린더+목록+드래그 · 플랜B · 리커버리 · 통계 · 위젯 · 행동 기록 심기</td><td>광고 SDK · Phase 3 서버 · 동기화 · AI(횟수 세기 + 충전 로직)</td><td>시제품 · 데이터 구조 문서 · MVP 빌드 · 베타 배포</td></tr>
+      <tr><td class="k">디자인</td><td>브랜드 기본형(워드마크 · 컬러 · 서체) · 핵심 3화면 초안</td><td><strong>알림 문구 세트</strong> · 복귀 화면 톤 · 드래그 조작감 · 온보딩 진행 표시 · 다크모드</td><td>스토어 스크린샷 5장(첫 장에 플랜B) · 아이콘 · 광고 영역</td><td>브랜드 가이드 · 디자인 시스템(Figma) · 알림 문구 세트 · 스크린샷</td></tr>
+      <tr><td class="k">마케팅</td><td>ASO 키워드 조사 · 수요 문장 수집 · 상표 · 도메인 · 계정 · <strong>이름 확정</strong></td><td>학술 근거 콘텐츠화 · 커뮤니티 참여 · 소개 페이지 · 베타 테스터 모집</td><td>광고 계정 · eCPM 실측 → 손익분기 · 유료 광고는 7일 재방문 달성 후</td><td>키워드 세트 · 수요 문장 50건 · 콘텐츠 5편 · 소개 페이지 · 베타 100명</td></tr>
+    </tbody>
+  </table></div>
+
+  <h4>첫 2주 — 이 문서를 읽고 각자 월요일에 시작할 것</h4>
+  <div class="tw"><table>
+    <thead><tr><th>담당</th><th>1주차</th><th>2주차</th></tr></thead>
+    <tbody>
+      <tr><td class="k">PM</td><td>경쟁앱 6종 설치 후 검증 리포트 · 인터뷰 대상 10명 모집</td><td>인터뷰 실행 · 기능 명세서 초안 · 기록 규칙표 초안</td></tr>
+      <tr><td class="k">개발</td><td><strong>알림 액션 시제품 착수</strong> · 기술 방식 결정 회의</td><td>시제품 완료 · 기기 내 데이터 구조 초안(PM과 합의)</td></tr>
+      <tr><td class="k">디자인</td><td>로고 시안 3개 · 컬러 확정 · 명암 대비 실측</td><td>핵심 3화면 초안 · 알림 문구 세트 초안</td></tr>
+      <tr><td class="k">마케팅</td><td>상표 · 도메인 · 계정 확보 · 검색 키워드 조사</td><td>수요 문장 50건 · 콘텐츠 주제 5개 · <strong>이름 최종 확정</strong></td></tr>
+    </tbody>
+  </table></div>
+  <div class="note warn"><b>2주 뒤 함께 판단할 것 하나</b> — 알림 액션 시제품과 경쟁앱 검증 리포트가 나오면 그 자리에서 <b>"계속할지"</b>를 정합니다. 알림 액션이 원하는 만큼 동작하지 않거나, 경쟁앱에 이미 플랜B가 있다면 기획 전제부터 다시 짭니다. 늦게 알수록 비쌉니다.</div>
+
+  <h3><span class="k">10.4</span>향후 확장 계획</h3>
+  <h4>Phase 3 확장 — 유료 상품과 함께</h4>
+  <ul style="font-size:14.5px">
+    <li><strong>서버 · 계정 · 클라우드 동기화</strong> — 여기서 처음으로 원가가 발생하므로 플러스 상품과 동시에 오픈</li>
+    <li><strong>AI 자연어 · 음성 입력, 일정 쪼개기 제안</strong> — 무료 월 10회 + 광고 충전, 플러스 월 300회</li>
+    <li><strong>Android</strong> — 알림 액션 · 위젯을 네이티브로 재구현</li>
+    <li><strong>주간 리포트 메일</strong> · 기록 무제한 · 이미지 첨부</li>
+  </ul>
+
+  <h4>우리의 플랜B — A안이 실패했을 때</h4>
+  <p style="font-size:14.5px">이 앱은 "플랜B를 미리 정해두라"고 말하는 앱입니다. 그러니 우리 자신도 플랜B가 있어야 합니다. 먼저 무엇이 고정이고 무엇이 바뀔 수 있는지부터 합의합니다.</p>
+  <div class="two">
+    <div class="lock">
+      <h4>절대 안 바꾸는 것</h4>
+      <ul>
+        <li>무너진 다음에 다시 세운다 — 존재 이유</li>
+        <li>연속 일수를 0으로 리셋하지 않는다</li>
+        <li>실패를 처벌하지 않는다</li>
+        <li>소셜 · 금전 벌칙 · 랭킹은 하지 않는다</li>
+        <li>앱 관리에 시간을 쓰게 하지 않는다</li>
+      </ul>
+    </div>
+    <div>
+      <h4 style="color:var(--mist)">바꿀 수 있는 것</h4>
+      <ul>
+        <li>어떤 방식으로 복귀를 만드는가</li>
+        <li>사용자가 무엇을 미리 입력하는가</li>
+        <li>개입이 어디서 일어나는가 (알림 / 위젯 / 앱)</li>
+        <li>개입 타이밍과 문구의 강도</li>
+        <li>누구를 먼저 겨냥하는가</li>
+      </ul>
+    </div>
+  </div>
+  <div class="tw"><table>
+    <thead><tr><th>관측된 신호</th><th>뜻하는 것</th><th>대안</th><th>내용</th><th class="num">개발 비용</th></tr></thead>
+    <tbody>
+      <tr><td class="k">플랜B 설정률<br>20% 미만</td><td>"미리 정하기" 자체가 부담</td><td class="k">B1 자동 축소<br><span class="dim">안 되면 B2</span></td><td>사용자가 대안을 안 정합니다. 앱이 <strong>같은 일의 작은 버전</strong>을 자동 제시 — <code>헬스장 45분</code> 놓침 → "오늘은 15분만?" 숫자 있는 루틴은 25~30% 수준으로 축소. A안과 공존 가능</td><td class="num">낮음</td></tr>
+      <tr><td class="k">설정률 40% 이상인데<br>실행률 20% 미만</td><td>정해둔 대안이 현실적이지 않음</td><td class="k">B1</td><td>위와 동일</td><td class="num">낮음</td></tr>
+      <tr><td class="k">B1도 안 될 때</td><td>미리 정하기 포기</td><td class="k">B2 사후 선택</td><td>놓친 다음 기회에 <code>그대로</code> / <code>절반만</code> / <code>이번 주는 쉼</code> 중 선택. Structured Replan으로 검증된 UX. 다만 사전 대비 계획의 이점(준수율 71%)을 포기하므로 A안이 두 번 실패했을 때의 안전망</td><td class="num">낮음</td></tr>
+      <tr><td class="k">복귀율 50% 이상인데<br>30일 재방문 5% 미만</td><td>단기 가치는 있고 장기 가치가 없음</td><td class="k">B3 난이도 자동 조정</td><td>3주 수행률 40% 이하 → "주 5회에서 주 3회로 줄일까요?" 실패를 목표 설정의 문제로 재해석. <strong>반드시 제안형</strong>, 사용자 승인 필수. 쓸수록 목표가 나에게 맞춰지는 "계속 쓸 이유"</td><td class="num">중간</td></tr>
+      <tr><td class="k">공통 기반</td><td>근거만 보면 가장 강함</td><td class="k">B4 복귀 순간 올인</td><td>플랜B를 빼고 결손 후 첫 복귀에 전체 화면 — "5일 만이네요. 반가워요." Nature 메가스터디 1위 개입의 순수 구현. 단독으로는 얇아 <strong>다른 안의 공통 기반</strong>으로</td><td class="num">최저</td></tr>
+      <tr><td class="k">특정 요일 · 상황에<br>결손 집중</td><td>요일 고정이 문제</td><td class="k">B5 주 단위 세기<br><span class="dim">A안과 병행</span></td><td>"매일 아침 운동"이 아니라 "주 4회 운동". 결손 개념 자체가 줄어듦. <strong>Phase 1에 옵션으로 넣고 A/B 비교 권장.</strong> 습관화는 느려질 수 있음(Lally 2010)</td><td class="num">중간</td></tr>
+      <tr><td class="k">모든 지표가<br>애매하게 저조</td><td>기능이 아니라 타깃 문제</td><td class="k">B6 타깃 전환</td><td>운동 초심자 · 시험 준비생 · 복직/복학 · 육아 부모 · 금연·금주 중 하나로 좁힘. 문구 · 플랜B 라이브러리 · 마케팅 채널만 교체, 개발 재작업 거의 없음</td><td class="num">낮음</td></tr>
+      <tr><td class="k">알림 응답률<br>15% 미만</td><td>알림을 아예 안 봄</td><td class="k">위젯 중심 전환</td><td>+ 알림 시간 개인화</td><td class="num">낮음</td></tr>
+    </tbody>
+  </table></div>
+
+  <h4>가장 멀리 갔을 때 — 방향 전환</h4>
+  <p style="font-size:14.5px">챌린저스는 습관 앱으로 4~5년을 하다 2023년 커머스로 방향을 바꿨고, 매출이 58억 → 150억 → 272억으로 늘었습니다. 방향 전환은 실패가 아니라 정상적인 경로일 수 있습니다. 지금 정할 일은 아니지만, <strong>우리가 축적하는 자산은 앱이 아니라 "사람들이 언제 어떻게 무너지고, 무엇이 있으면 돌아오는가"에 대한 데이터</strong>입니다. 기업 복지 프로그램, 운동 · 학습 서비스 제휴, 건강 관리 영역에서 앱보다 가치 있을 수 있습니다. 그러니 §7.3의 기록 규칙표를 처음부터 제대로 설계하는 것이 이 시나리오에 대한 유일한 준비입니다.</p>
+</section>
+
+<footer class="foot">
+  <p>본 문서의 경쟁 앱 지표 · 가격은 2026년 9월 7일 기준 조사값이며, 기능 유무 판단은 공식 앱 설명 · 홈페이지 · 언론 보도 기준입니다 — <strong>Phase 0 실기기 검증이 완료되기 전까지는 확정 사실이 아닙니다.</strong> KPI 목표치와 가격안은 공개 벤치마크에 근거해 설정한 값이며 실측 결과가 아닙니다. §7의 계정 · 개인정보 항목 중 Phase 3 관련 내용은 방향성이며 해당 시점에 재검토합니다.</p>
+  <p>주요 출처 — Milkman et al. (2021) <em>Nature</em> 600, 478–483 · Lally et al. (2010) <em>Eur. J. Soc. Psychol.</em> 40(6) · Sniehotta et al. (2006) <em>Br. J. Health Psychol.</em> 11(1) · Harkin et al. (2016) <em>Psychol. Bull.</em> 142(2) · Kivetz et al. (2006) <em>J. Mark. Res.</em> 43(1) · Deci, Koestner &amp; Ryan (1999) <em>Psychol. Bull.</em> 125(6) · AppsFlyer 리텐션 · 삭제율 벤치마크 · RevenueCat &amp; Adapty 구독 리포트 2026 · 대한상의×엠브레인 구독서비스 이용실태 2025 · 오픈서베이 대학생활 리포트 2025 · 인크루트 직장인 자기계발 조사</p>
+</footer>
+
+</main>
+</div>
+
+</body>
+</html>
